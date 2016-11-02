@@ -15,11 +15,13 @@ class Scramble extends Core_Controller {
             $count = (int) $count + 1;
             $this->session->set_userdata("count", $count);
         } else {
+			$count = 1;
             $this->session->set_userdata("count", 1);
         }
 
         $score = $this->session->userdata("score");
         if (!isset($score)) {
+			$score = 0;
             $this->session->set_userdata("score", 0);
         }
 

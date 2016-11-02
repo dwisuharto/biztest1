@@ -15,23 +15,40 @@
 </div>
 
 <script type="text/javascript">
-    $('#scrambleAnswer').on('keypress', function(e) {
+	var previousText = "";
+	
+    $('#scrambleAnswer').on('keyup', function(e) {
         $('#scrambleMsg').fadeOut();
 
-        var chr = String.fromCharCode(e.which).toUpperCase();
-        $('button[data-value="' + chr + '"]').attr('disabled', true);
-        $('button[data-value="' + chr + '"]').css('background-color', '#999999');
+        var key = e.keyCode || e.charCode;
+        if (key == 8 || key == 46) {
+			var value = $(this).val().toUpperCase();
+			
+			var diff = "";
+			for (var i = 0; i < previousText.length; i++) {
+				var pChr = previousText.substr(i, 1);
+				var cChr = value.substr(i, 1);
+				if (pChr != cChr) {
+					diff = pChr;
+					break;
+				}
+			}
+			
+            $('button[data-value="' + diff + '"]').attr('disabled', false);
+            $('button[data-value="' + diff + '"]').css('background-color', '#ffffff');
+        } else {
+			var chr = String.fromCharCode(e.which).toUpperCase();
+			$('button[data-value="' + chr + '"]').attr('disabled', true);
+			$('button[data-value="' + chr + '"]').css('background-color', '#999999');
+		}
+
+        previousText = $(this).val().toUpperCase();
     });
 
     $('#scrambleAnswer').on('keydown', function(e) {
-        var value = $(this).val().toUpperCase();
         var key = e.keyCode || e.charCode;
-
-        if (key == 8 || key == 46) {
-            var chr = value.substr(value.length - 1);
-            $('button[data-value="' + chr + '"]').attr('disabled', false);
-            $('button[data-value="' + chr + '"]').css('background-color', '#ffffff');
-        } else if (key == 13) {
+        if (key == 13) {
+			var value = $(this).val().toUpperCase();
             checkAnswer(value);
         }
     });
