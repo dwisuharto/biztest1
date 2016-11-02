@@ -1,5 +1,5 @@
 <div class="col-lg-3 col-lg-offset-5">
-    <form class="form-horizontal" method="post" action="<?php url("signin/proceed"); ?>">
+    <form class="form-horizontal" method="post" action="<?php url("auth/signin"); ?>">
         <div class="form-group">
             <label class="control-label col-lg-3">Username</label>
             <div class="col-lg-9">
